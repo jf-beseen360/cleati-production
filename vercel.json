@@ -1,0 +1,17 @@
+{
+  "builds": [
+    {
+      "src": "cleati_production_api_v3_i18n.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "cleati_production_api_v3_i18n.py"
+    }
+  ],
+  "env": {
+    "PYTHONUNBUFFERED": "1"
+  }
+}
