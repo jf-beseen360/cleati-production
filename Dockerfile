@@ -14,11 +14,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements
-COPY requirements.txt .
+# Copy requirements (use minimal for faster builds)
+COPY requirements-minimal.txt .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --no-cache-dir --user -r requirements-minimal.txt
 
 # ============================================
 # STAGE 2: Runtime
@@ -43,10 +43,9 @@ ENV PATH=/root/.local/bin:$PATH \
     ENVIRONMENT=production
 
 # Copy application code
-COPY cleati_orchestrator_v3.py .
-COPY cleati_production_api_v3.py .
-COPY cleati_reports_generator_v3.py .
-COPY cleati_bugfixes_v3.py .
+COPY cleati_production_api_v3_i18n.py .
+COPY cleati_interface_v3_i18n.html .
+COPY cleati/ ./cleati/
 
 # Create non-root user
 RUN useradd -m -u 1000 cleati && \
@@ -62,4 +61,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 EXPOSE 8000
 
 # Run application
-CMD ["python", "-m", "uvicorn", "cleati_production_api_v3:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "-m", "uvicorn", "cleati_production_api_v3_i18n:app", "--host", "0.0.0.0", "--port", "8000"]
