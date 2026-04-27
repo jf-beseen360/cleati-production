@@ -1,0 +1,70 @@
+{
+  "navigation": {
+    "setup": "Configuration",
+    "financial": "Financier",
+    "green": "Vert",
+    "results": "Résultats",
+    "dashboard": "Tableau de bord",
+    "reports": "Rapports",
+    "settings": "Paramètres",
+    "projects": "Projets",
+    "analytics": "Analyses"
+  },
+  "setup": {
+    "title": "Paramétrage du Projet",
+    "project_name": "Nom du projet",
+    "project_name_placeholder": "Entrez le nom du projet",
+    "description": "Description",
+    "description_placeholder": "Décrivez votre projet",
+    "sector": "Secteur",
+    "location": "Localisation",
+    "budget": "Budget (€)",
+    "duration": "Durée (mois)",
+    "team_size": "Taille de l'équipe",
+    "start_date": "Date de début",
+    "end_date": "Date de fin",
+    "submit": "Créer le projet"
+  },
+  "financial": {
+    "title": "Analyse Financière",
+    "revenue": "Revenu",
+    "costs": "Coûts",
+    "profit": "Bénéfice",
+    "roi": "ROI",
+    "breakeven": "Point d'équilibre",
+    "cash_flow": "Flux de trésorerie",
+    "investment": "Investissement",
+    "payback_period": "Période de récupération",
+    "npv": "VAN",
+    "irr": "TRI"
+  },
+  "green": {
+    "title": "Impact Vert",
+    "esg_score": "Score ESG",
+    "carbon_emissions": "Émissions de carbone",
+    "renewable_energy": "Énergie renouvelable",
+    "water_saved": "Eau économisée",
+    "waste_reduced": "Déchets réduits",
+    "jobs_created": "Emplois créés",
+    "environmental": "Environnemental",
+    "social": "Social",
+    "governance": "Gouvernance"
+  },
+  "results": {
+    "title": "Résultats",
+    "project_summary": "Résumé du projet",
+    "key_metrics": "Métriques clés",
+    "financial_overview": "Aperçu financier",
+    "impact_overview": "Aperçu d'impact",
+    "recommendations": "Recommandations",
+    "generate_report": "Générer un rapport"
+  },
+  "form": {
+    "required": "Obligatoire",
+    "optional": "Facultatif",
+    "placeholder": "Placeholder",
+    "invalid": "Invalide",
+    "error": "Erreur",
+    "success": "Succès"
+  }
+}

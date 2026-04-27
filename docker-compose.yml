@@ -1,0 +1,159 @@
+version: '3.8'
+
+# CLEATI V3.3 - Docker Compose Configuration
+# Development and local testing environment
+
+services:
+
+  # ============================================
+  # CLEATI API Server
+  # ============================================
+  cleati-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cleati-api-v3
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_URL=postgresql://cleati_user:cleati_password@postgres:5432/cleati
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+    networks:
+      - cleati-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v3/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # ============================================
+  # PostgreSQL Database
+  # ============================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: cleati-postgres
+    environment:
+      - POSTGRES_USER=cleati_user
+      - POSTGRES_PASSWORD=cleati_password
+      - POSTGRES_DB=cleati
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - cleati-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cleati_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ============================================
+  # Redis Cache (Optional)
+  # ============================================
+  redis:
+    image: redis:7-alpine
+    container_name: cleati-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - cleati-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ============================================
+  # Prometheus Monitoring
+  # ============================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: cleati-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - cleati-network
+    restart: unless-stopped
+
+  # ============================================
+  # Grafana Dashboards
+  # ============================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: cleati-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - cleati-network
+    restart: unless-stopped
+
+  # ============================================
+  # Nginx Reverse Proxy
+  # ============================================
+  nginx:
+    image: nginx:alpine
+    container_name: cleati-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - cleati-api
+    networks:
+      - cleati-network
+    restart: unless-stopped
+
+# ============================================
+# Networks
+# ============================================
+networks:
+  cleati-network:
+    driver: bridge
+
+# ============================================
+# Volumes
+# ============================================
+volumes:
+  postgres-data:
+  redis-data:
+  prometheus-data:
+  grafana-data:
+
+# ============================================
+# Usage
+# ============================================
+# Build: docker-compose build
+# Start: docker-compose up -d
+# Logs:  docker-compose logs -f cleati-api
+# Stop:  docker-compose down
+#
+# Access:
+# - API:      http://localhost:8000
+# - Grafana:  http://localhost:3000
+# - Prometheus: http://localhost:9090

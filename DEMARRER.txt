@@ -1,0 +1,82 @@
+================================================================================
+                        CLEATI V3.2 - DÉMARRAGE RAPIDE
+================================================================================
+
+Bienvenue! Vous êtes dans le dossier CLEATI_V3.2
+
+Voici comment commencer en 2 minutes:
+
+================================================================================
+ÉTAPE 1: LANCER LE SERVEUR (30 secondes)
+================================================================================
+
+Double-cliquez sur:
+    ⚡ LANCER_SERVEUR.bat
+
+Une fenêtre noire s'ouvre avec du texte.
+
+Attendez que ça affiche:
+    "Uvicorn running on http://127.0.0.1:8000"
+
+NE FERMEZ PAS cette fenêtre! Laissez-la ouverte pendant que vous testez.
+
+================================================================================
+ÉTAPE 2: OUVRIR L'INTERFACE WEB (30 secondes)
+================================================================================
+
+Double-cliquez sur:
+    🌐 cleati_interface.html
+
+Une page web s'ouvre dans votre navigateur.
+
+C'est l'interface CLEATI V3.2!
+
+================================================================================
+ÉTAPE 3: TESTER (1 minute)
+================================================================================
+
+Dans la page web, cliquez sur les boutons dans cet ordre:
+
+1. "▶ Démarrer" dans ÉTAPE 1
+2. "🎭 Simuler l'Analyse" dans ÉTAPE 2
+3. Choisir une option (1️⃣ 2️⃣ 3️⃣ ou 4️⃣) puis cliquer "📝 Envoyer"
+4. Choisir un format (📄📊📋✨) puis cliquer "✓ Confirmer"
+5. Cliquer "⚡ GÉNÉRER"
+
+Vous verrez les résultats s'afficher en vert ✅
+
+================================================================================
+                              C'EST TOUT!
+================================================================================
+
+Si tout fonctionne, vous verrez:
+    ✅ CLEATI V3.2 - TEST RÉUSSI!
+
+Si ça ne marche pas:
+    ❌ Vérifier que LANCER_SERVEUR.bat est toujours ouvert
+    ❌ Essayer de recharger la page web (F5)
+    ❌ Envoyer le message d'erreur exact
+
+================================================================================
+                           FICHIERS IMPORTANTS
+================================================================================
+
+cleati_interface.html    → L'interface web (double-cliquez pour tester)
+LANCER_SERVEUR.bat      → Lance le serveur (ne pas fermer)
+OUVRIR_CLEATI.bat       → Ouvre ce dossier
+cleati_production_api.py → Le code du serveur
+
+================================================================================
+                              BESOIN D'AIDE?
+================================================================================
+
+README_D_ABORD.txt  → Documentation complète
+CLEATI_V3.2_DOCS.md → Documentation détaillée
+
+================================================================================
+
+Allez-y! Commencez par LANCER_SERVEUR.bat
+
+Bon test! 🚀
+
+================================================================================

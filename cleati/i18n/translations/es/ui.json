@@ -1,0 +1,70 @@
+{
+  "navigation": {
+    "setup": "Configuración",
+    "financial": "Financiero",
+    "green": "Verde",
+    "results": "Resultados",
+    "dashboard": "Panel de control",
+    "reports": "Reportes",
+    "settings": "Configuración",
+    "projects": "Proyectos",
+    "analytics": "Analítica"
+  },
+  "setup": {
+    "title": "Configuración del Proyecto",
+    "project_name": "Nombre del Proyecto",
+    "project_name_placeholder": "Ingrese el nombre del proyecto",
+    "description": "Descripción",
+    "description_placeholder": "Describa su proyecto",
+    "sector": "Sector",
+    "location": "Ubicación",
+    "budget": "Presupuesto (€)",
+    "duration": "Duración (meses)",
+    "team_size": "Tamaño del Equipo",
+    "start_date": "Fecha de Inicio",
+    "end_date": "Fecha de Fin",
+    "submit": "Crear Proyecto"
+  },
+  "financial": {
+    "title": "Análisis Financiero",
+    "revenue": "Ingresos",
+    "costs": "Costos",
+    "profit": "Ganancia",
+    "roi": "ROI",
+    "breakeven": "Punto de Equilibrio",
+    "cash_flow": "Flujo de Efectivo",
+    "investment": "Inversión",
+    "payback_period": "Período de Recuperación",
+    "npv": "VAN",
+    "irr": "TIR"
+  },
+  "green": {
+    "title": "Impacto Verde",
+    "esg_score": "Puntuación ESG",
+    "carbon_emissions": "Emisiones de Carbono",
+    "renewable_energy": "Energía Renovable",
+    "water_saved": "Agua Ahorrada",
+    "waste_reduced": "Residuos Reducidos",
+    "jobs_created": "Empleos Creados",
+    "environmental": "Ambiental",
+    "social": "Social",
+    "governance": "Gobernanza"
+  },
+  "results": {
+    "title": "Resultados",
+    "project_summary": "Resumen del Proyecto",
+    "key_metrics": "Métricas Clave",
+    "financial_overview": "Resumen Financiero",
+    "impact_overview": "Resumen de Impacto",
+    "recommendations": "Recomendaciones",
+    "generate_report": "Generar Reporte"
+  },
+  "form": {
+    "required": "Requerido",
+    "optional": "Opcional",
+    "placeholder": "Placeholder",
+    "invalid": "Inválido",
+    "error": "Error",
+    "success": "Éxito"
+  }
+}

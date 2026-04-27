@@ -1,0 +1,111 @@
+{
+  "languages": {
+    "fr": {
+      "name": "Français",
+      "nativeName": "Français",
+      "locale": "fr-FR",
+      "direction": "ltr",
+      "dateFormat": "dd/MM/yyyy",
+      "timeFormat": "HH:mm:ss",
+      "numberSeparator": ",",
+      "thousandsSeparator": ".",
+      "currencySymbol": "€",
+      "currencyPosition": "after",
+      "currencyCode": "EUR"
+    },
+    "en": {
+      "name": "English",
+      "nativeName": "English",
+      "locale": "en-US",
+      "direction": "ltr",
+      "dateFormat": "MM/dd/yyyy",
+      "timeFormat": "hh:mm:ss a",
+      "numberSeparator": ".",
+      "thousandsSeparator": ",",
+      "currencySymbol": "$",
+      "currencyPosition": "before",
+      "currencyCode": "USD"
+    },
+    "es": {
+      "name": "Spanish",
+      "nativeName": "Español",
+      "locale": "es-ES",
+      "direction": "ltr",
+      "dateFormat": "dd/MM/yyyy",
+      "timeFormat": "HH:mm:ss",
+      "numberSeparator": ",",
+      "thousandsSeparator": ".",
+      "currencySymbol": "€",
+      "currencyPosition": "after",
+      "currencyCode": "EUR"
+    },
+    "de": {
+      "name": "German",
+      "nativeName": "Deutsch",
+      "locale": "de-DE",
+      "direction": "ltr",
+      "dateFormat": "dd.MM.yyyy",
+      "timeFormat": "HH:mm:ss",
+      "numberSeparator": ",",
+      "thousandsSeparator": ".",
+      "currencySymbol": "€",
+      "currencyPosition": "after",
+      "currencyCode": "EUR"
+    },
+    "it": {
+      "name": "Italian",
+      "nativeName": "Italiano",
+      "locale": "it-IT",
+      "direction": "ltr",
+      "dateFormat": "dd/MM/yyyy",
+      "timeFormat": "HH:mm:ss",
+      "numberSeparator": ",",
+      "thousandsSeparator": ".",
+      "currencySymbol": "€",
+      "currencyPosition": "after",
+      "currencyCode": "EUR"
+    },
+    "pt": {
+      "name": "Portuguese",
+      "nativeName": "Português",
+      "locale": "pt-PT",
+      "direction": "ltr",
+      "dateFormat": "dd/MM/yyyy",
+      "timeFormat": "HH:mm:ss",
+      "numberSeparator": ",",
+      "thousandsSeparator": ".",
+      "currencySymbol": "€",
+      "currencyPosition": "after",
+      "currencyCode": "EUR"
+    },
+    "nl": {
+      "name": "Dutch",
+      "nativeName": "Nederlands",
+      "locale": "nl-NL",
+      "direction": "ltr",
+      "dateFormat": "dd-MM-yyyy",
+      "timeFormat": "HH:mm:ss",
+      "numberSeparator": ",",
+      "thousandsSeparator": ".",
+      "currencySymbol": "€",
+      "currencyPosition": "after",
+      "currencyCode": "EUR"
+    },
+    "pl": {
+      "name": "Polish",
+      "nativeName": "Polski",
+      "locale": "pl-PL",
+      "direction": "ltr",
+      "dateFormat": "dd.MM.yyyy",
+      "timeFormat": "HH:mm:ss",
+      "numberSeparator": ",",
+      "thousandsSeparator": " ",
+      "currencySymbol": "zł",
+      "currencyPosition": "after",
+      "currencyCode": "PLN"
+    }
+  },
+  "defaultLanguage": "en",
+  "fallbackLanguage": "en",
+  "supportedNamespaces": ["common", "ui", "api", "reports", "formats"]
+}

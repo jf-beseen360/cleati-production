@@ -1,0 +1,70 @@
+{
+  "navigation": {
+    "setup": "Setup",
+    "financial": "Finanzen",
+    "green": "Grün",
+    "results": "Ergebnisse",
+    "dashboard": "Dashboard",
+    "reports": "Berichte",
+    "settings": "Einstellungen",
+    "projects": "Projekte",
+    "analytics": "Analytik"
+  },
+  "setup": {
+    "title": "Projekt-Setup",
+    "project_name": "Projektname",
+    "project_name_placeholder": "Projektname eingeben",
+    "description": "Beschreibung",
+    "description_placeholder": "Beschreiben Sie Ihr Projekt",
+    "sector": "Sektor",
+    "location": "Standort",
+    "budget": "Budget (€)",
+    "duration": "Dauer (Monate)",
+    "team_size": "Teamgröße",
+    "start_date": "Startdatum",
+    "end_date": "Enddatum",
+    "submit": "Projekt erstellen"
+  },
+  "financial": {
+    "title": "Finanzielle Analyse",
+    "revenue": "Umsatz",
+    "costs": "Kosten",
+    "profit": "Gewinn",
+    "roi": "ROI",
+    "breakeven": "Gewinnschwelle",
+    "cash_flow": "Cashflow",
+    "investment": "Investition",
+    "payback_period": "Amortisationsdauer",
+    "npv": "NPV",
+    "irr": "IRR"
+  },
+  "green": {
+    "title": "Grüne Auswirkung",
+    "esg_score": "ESG-Punktzahl",
+    "carbon_emissions": "Kohlenstoffemissionen",
+    "renewable_energy": "Erneuerbare Energie",
+    "water_saved": "Wassereinsparung",
+    "waste_reduced": "Abfallreduzierung",
+    "jobs_created": "Geschaffene Arbeitsplätze",
+    "environmental": "Umweltschutz",
+    "social": "Sozial",
+    "governance": "Unternehmensführung"
+  },
+  "results": {
+    "title": "Ergebnisse",
+    "project_summary": "Projekt Zusammenfassung",
+    "key_metrics": "Schlüsselmetriken",
+    "financial_overview": "Finanzübersicht",
+    "impact_overview": "Auswirkungsübersicht",
+    "recommendations": "Empfehlungen",
+    "generate_report": "Bericht generieren"
+  },
+  "form": {
+    "required": "Erforderlich",
+    "optional": "Optional",
+    "placeholder": "Placeholder",
+    "invalid": "Ungültig",
+    "error": "Fehler",
+    "success": "Erfolg"
+  }
+}

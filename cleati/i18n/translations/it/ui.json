@@ -1,0 +1,70 @@
+{
+  "navigation": {
+    "setup": "Configurazione",
+    "financial": "Finanziario",
+    "green": "Verde",
+    "results": "Risultati",
+    "dashboard": "Pannello",
+    "reports": "Rapporti",
+    "settings": "Impostazioni",
+    "projects": "Progetti",
+    "analytics": "Analitiche"
+  },
+  "setup": {
+    "title": "Configurazione del Progetto",
+    "project_name": "Nome del Progetto",
+    "project_name_placeholder": "Inserisci il nome del progetto",
+    "description": "Descrizione",
+    "description_placeholder": "Descrivi il tuo progetto",
+    "sector": "Settore",
+    "location": "Ubicazione",
+    "budget": "Budget (€)",
+    "duration": "Durata (mesi)",
+    "team_size": "Dimensione del Team",
+    "start_date": "Data di Inizio",
+    "end_date": "Data di Fine",
+    "submit": "Crea Progetto"
+  },
+  "financial": {
+    "title": "Analisi Finanziaria",
+    "revenue": "Ricavi",
+    "costs": "Costi",
+    "profit": "Profitto",
+    "roi": "ROI",
+    "breakeven": "Pareggio",
+    "cash_flow": "Flusso di Cassa",
+    "investment": "Investimento",
+    "payback_period": "Periodo di Rientro",
+    "npv": "VAN",
+    "irr": "TIR"
+  },
+  "green": {
+    "title": "Impatto Verde",
+    "esg_score": "Punteggio ESG",
+    "carbon_emissions": "Emissioni di Carbonio",
+    "renewable_energy": "Energia Rinnovabile",
+    "water_saved": "Acqua Risparmiata",
+    "waste_reduced": "Rifiuti Ridotti",
+    "jobs_created": "Posti di Lavoro Creati",
+    "environmental": "Ambientale",
+    "social": "Sociale",
+    "governance": "Governance"
+  },
+  "results": {
+    "title": "Risultati",
+    "project_summary": "Riepilogo del Progetto",
+    "key_metrics": "Metriche Chiave",
+    "financial_overview": "Panoramica Finanziaria",
+    "impact_overview": "Panoramica dell'Impatto",
+    "recommendations": "Raccomandazioni",
+    "generate_report": "Genera Rapporto"
+  },
+  "form": {
+    "required": "Obbligatorio",
+    "optional": "Facoltativo",
+    "placeholder": "Placeholder",
+    "invalid": "Non valido",
+    "error": "Errore",
+    "success": "Successo"
+  }
+}

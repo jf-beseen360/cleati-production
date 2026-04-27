@@ -1,0 +1,70 @@
+{
+  "navigation": {
+    "setup": "Setup",
+    "financial": "Financial",
+    "green": "Green",
+    "results": "Results",
+    "dashboard": "Dashboard",
+    "reports": "Reports",
+    "settings": "Settings",
+    "projects": "Projects",
+    "analytics": "Analytics"
+  },
+  "setup": {
+    "title": "Project Setup",
+    "project_name": "Project Name",
+    "project_name_placeholder": "Enter project name",
+    "description": "Description",
+    "description_placeholder": "Describe your project",
+    "sector": "Sector",
+    "location": "Location",
+    "budget": "Budget (€)",
+    "duration": "Duration (months)",
+    "team_size": "Team Size",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "submit": "Create Project"
+  },
+  "financial": {
+    "title": "Financial Analysis",
+    "revenue": "Revenue",
+    "costs": "Costs",
+    "profit": "Profit",
+    "roi": "ROI",
+    "breakeven": "Breakeven",
+    "cash_flow": "Cash Flow",
+    "investment": "Investment",
+    "payback_period": "Payback Period",
+    "npv": "NPV",
+    "irr": "IRR"
+  },
+  "green": {
+    "title": "Green Impact",
+    "esg_score": "ESG Score",
+    "carbon_emissions": "Carbon Emissions",
+    "renewable_energy": "Renewable Energy",
+    "water_saved": "Water Saved",
+    "waste_reduced": "Waste Reduced",
+    "jobs_created": "Jobs Created",
+    "environmental": "Environmental",
+    "social": "Social",
+    "governance": "Governance"
+  },
+  "results": {
+    "title": "Results",
+    "project_summary": "Project Summary",
+    "key_metrics": "Key Metrics",
+    "financial_overview": "Financial Overview",
+    "impact_overview": "Impact Overview",
+    "recommendations": "Recommendations",
+    "generate_report": "Generate Report"
+  },
+  "form": {
+    "required": "Required",
+    "optional": "Optional",
+    "placeholder": "Placeholder",
+    "invalid": "Invalid",
+    "error": "Error",
+    "success": "Success"
+  }
+}

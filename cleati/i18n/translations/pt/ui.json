@@ -1,0 +1,70 @@
+{
+  "navigation": {
+    "setup": "Configuração",
+    "financial": "Financeiro",
+    "green": "Verde",
+    "results": "Resultados",
+    "dashboard": "Painel",
+    "reports": "Relatórios",
+    "settings": "Configurações",
+    "projects": "Projetos",
+    "analytics": "Análises"
+  },
+  "setup": {
+    "title": "Configuração do Projeto",
+    "project_name": "Nome do Projeto",
+    "project_name_placeholder": "Digite o nome do projeto",
+    "description": "Descrição",
+    "description_placeholder": "Descreva seu projeto",
+    "sector": "Setor",
+    "location": "Localização",
+    "budget": "Orçamento (€)",
+    "duration": "Duração (meses)",
+    "team_size": "Tamanho da Equipe",
+    "start_date": "Data de Início",
+    "end_date": "Data de Término",
+    "submit": "Criar Projeto"
+  },
+  "financial": {
+    "title": "Análise Financeira",
+    "revenue": "Receita",
+    "costs": "Custos",
+    "profit": "Lucro",
+    "roi": "ROI",
+    "breakeven": "Ponto de Equilíbrio",
+    "cash_flow": "Fluxo de Caixa",
+    "investment": "Investimento",
+    "payback_period": "Período de Retorno",
+    "npv": "VPL",
+    "irr": "TIR"
+  },
+  "green": {
+    "title": "Impacto Verde",
+    "esg_score": "Pontuação ESG",
+    "carbon_emissions": "Emissões de Carbono",
+    "renewable_energy": "Energia Renovável",
+    "water_saved": "Água Economizada",
+    "waste_reduced": "Resíduos Reduzidos",
+    "jobs_created": "Empregos Criados",
+    "environmental": "Ambiental",
+    "social": "Social",
+    "governance": "Governança"
+  },
+  "results": {
+    "title": "Resultados",
+    "project_summary": "Resumo do Projeto",
+    "key_metrics": "Métricas Chave",
+    "financial_overview": "Visão Geral Financeira",
+    "impact_overview": "Visão Geral do Impacto",
+    "recommendations": "Recomendações",
+    "generate_report": "Gerar Relatório"
+  },
+  "form": {
+    "required": "Obrigatório",
+    "optional": "Opcional",
+    "placeholder": "Placeholder",
+    "invalid": "Inválido",
+    "error": "Erro",
+    "success": "Sucesso"
+  }
+}

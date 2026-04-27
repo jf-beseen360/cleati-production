@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLEATI V3.3 - Real-time Monitoring Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --border: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #374151 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .header-status {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-healthy {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-alert {
+            background: #fee2e2;
+            color: #7f1d1d;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        .card.secondary {
+            border-left-color: var(--secondary);
+        }
+
+        .card.warning {
+            border-left-color: var(--warning);
+        }
+
+        .card-title {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .card-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .card.secondary .card-value {
+            color: var(--secondary);
+        }
+
+        .card.warning .card-value {
+            color: var(--warning);
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            transition: width 0.3s ease;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .kpi-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-top: 3px solid var(--primary);
+        }
+
+        .kpi-name {
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .kpi-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .status-on-track {
+            color: var(--secondary);
+        }
+
+        .status-warning-text {
+            color: var(--warning);
+        }
+
+        .status-alert-text {
+            color: var(--danger);
+        }
+
+        .timeline {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .timeline-item {
+            padding: 15px;
+            border-left: 3px solid var(--border);
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .timeline-item.completed {
+            border-left-color: var(--secondary);
+        }
+
+        .timeline-item.completed::before {
+            background: var(--secondary);
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: #9ca3af;
+            font-weight: 600;
+        }
+
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 5px 0;
+        }
+
+        .timeline-description {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .alerts-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .alert-item {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 4px solid;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .alert-high {
+            background: #fee2e2;
+            border-left-color: var(--danger);
+            color: #7f1d1d;
+        }
+
+        .alert-medium {
+            background: #fef3c7;
+            border-left-color: var(--warning);
+            color: #92400e;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            border-left-color: var(--primary);
+            color: #1e40af;
+        }
+
+        .alert-icon {
+            font-size: 16px;
+            margin-top: 2px;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .alert-message {
+            font-size: 12px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #6b7280;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .refresh-btn {
+            padding: 8px 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .refresh-btn:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-title">
+            <i class="fas fa-chart-line" style="margin-right: 10px; color: var(--primary);"></i>
+            CLEATI V3.3 - Real-time Monitoring Dashboard
+        </div>
+        <div class="header-status">
+            <div class="status-badge status-healthy">
+                <i class="fas fa-check-circle"></i> System Healthy
+            </div>
+            <button class="refresh-btn" onclick="refreshDashboard()">
+                <i class="fas fa-sync"></i> Refresh
+            </button>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('overview')">📊 Overview</button>
+        <button class="tab-btn" onclick="showTab('financial')">💰 Financial</button>
+        <button class="tab-btn" onclick="showTab('green')">🌱 Green Impact</button>
+        <button class="tab-btn" onclick="showTab('kpis')">📈 KPIs</button>
+        <button class="tab-btn" onclick="showTab('alerts')">⚠️ Alerts</button>
+    </div>
+
+    <!-- TAB: OVERVIEW -->
+    <div id="overview" class="tab-content active">
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">Total Projects</div>
+                <div class="card-value" id="total-projects">0</div>
+                <div class="card-subtitle">Active in system</div>
+            </div>
+            <div class="card secondary">
+                <div class="card-title">On-Track KPIs</div>
+                <div class="card-value" id="on-track-kpis">0</div>
+                <div class="card-subtitle">Meeting targets</div>
+            </div>
+            <div class="card warning">
+                <div class="card-title">Alerts</div>
+                <div class="card-value" id="alert-count">0</div>
+                <div class="card-subtitle">Requiring attention</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">Average ROI</div>
+                <div class="card-value" id="avg-roi">0%</div>
+                <div class="card-subtitle">Across all projects</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%;"></div>
+                </div>
+            </div>
+            <div class="card secondary">
+                <div class="card-title">Total CO2 Reduction</div>
+                <div class="card-value" id="total-co2">0</div>
+                <div class="card-subtitle">Tonnes per year</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%;"></div>
+                </div>
+            </div>
+            <div class="card secondary">
+                <div class="card-title">Jobs Created</div>
+                <div class="card-value" id="total-jobs">0</div>
+                <div class="card-subtitle">Across portfolio</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="roiChart"></canvas>
+        </div>
+    </div>
+
+    <!-- TAB: FINANCIAL -->
+    <div id="financial" class="tab-content">
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">Total Investment</div>
+                <div class="card-value">€0</div>
+                <div class="card-subtitle">Across portfolio</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Projected Revenue Y1</div>
+                <div class="card-value">€0</div>
+                <div class="card-subtitle">Year 1 target</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Avg Breakeven</div>
+                <div class="card-value">0 mo</div>
+                <div class="card-subtitle">Months to breakeven</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="financialChart"></canvas>
+        </div>
+    </div>
+
+    <!-- TAB: GREEN -->
+    <div id="green" class="tab-content">
+        <div class="grid">
+            <div class="card secondary">
+                <div class="card-title">Avg ESG Score</div>
+                <div class="card-value">0.0</div>
+                <div class="card-subtitle">Out of 10</div>
+            </div>
+            <div class="card secondary">
+                <div class="card-title">CSRD Compliant</div>
+                <div class="card-value">0%</div>
+                <div class="card-subtitle">Projects certified</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="greenChart"></canvas>
+        </div>
+    </div>
+
+    <!-- TAB: KPIs -->
+    <div id="kpis" class="tab-content">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-name">Revenue vs Projection</div>
+                <div class="kpi-value">95%</div>
+                <div class="kpi-status status-on-track">
+                    <i class="fas fa-check-circle"></i> On Track
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-name">CO2 Impact</div>
+                <div class="kpi-value">102%</div>
+                <div class="kpi-status status-on-track">
+                    <i class="fas fa-arrow-up"></i> Exceeding
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-name">Cost Control</div>
+                <div class="kpi-value">105%</div>
+                <div class="kpi-status status-warning-text">
+                    <i class="fas fa-exclamation-triangle"></i> Slight Overrun
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-name">Customer Growth</div>
+                <div class="kpi-value">88%</div>
+                <div class="kpi-status status-warning-text">
+                    <i class="fas fa-exclamation-circle"></i> Below Target
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline">
+            <h3 style="margin-bottom: 20px;">Milestone Timeline</h3>
+            <div class="timeline-item completed">
+                <div class="timeline-date">Month 1-3</div>
+                <div class="timeline-title">✅ Setup & Launch</div>
+                <div class="timeline-description">Team hired, operations live</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Month 4-12</div>
+                <div class="timeline-title">🔄 Market Penetration</div>
+                <div class="timeline-description">Customer acquisition, revenue growing</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Month 18-24</div>
+                <div class="timeline-title">🎯 Breakeven Point</div>
+                <div class="timeline-description">Revenue = Costs, profitability clear</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Month 25+</div>
+                <div class="timeline-title">📈 Growth & Scale</div>
+                <div class="timeline-description">Market expansion, margin improvement</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB: ALERTS -->
+    <div id="alerts" class="tab-content">
+        <div class="alerts-container">
+            <div class="alert-item alert-high">
+                <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
+                <div class="alert-content">
+                    <div class="alert-title">Revenue Below Projection</div>
+                    <div class="alert-message">Current: €230K vs Target: €250K (-8%). Recommended: Review pricing strategy and customer acquisition.</div>
+                </div>
+            </div>
+
+            <div class="alert-item alert-medium">
+                <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="alert-content">
+                    <div class="alert-title">Operating Costs Trending High</div>
+                    <div class="alert-message">Current costs 105% of budget. Recommended: Review operational expenses and implement cost reduction measures.</div>
+                </div>
+            </div>
+
+            <div class="alert-item alert-medium">
+                <div class="alert-icon"><i class="fas fa-info-circle"></i></div>
+                <div class="alert-content">
+                    <div class="alert-title">CO2 Impact Exceeding Target</div>
+                    <div class="alert-message">Great news! Environmental impact is 102% of target. Continue current implementation approach.</div>
+                </div>
+            </div>
+
+            <div class="alert-item alert-info">
+                <div class="alert-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="alert-content">
+                    <div class="alert-title">Quarterly Review Upcoming</div>
+                    <div class="alert-message">Next evaluation scheduled for Q2 2026. Prepare: financial reconciliation, KPI updates, milestone assessment.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Mock data
+    const dashboardData = {
+        projects: 5,
+        kpisOnTrack: 3,
+        alerts: 2,
+        averageROI: 42.5,
+        totalCO2: 3500,
+        totalJobs: 45
+    };
+
+    function showTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+        document.getElementById(tabName).classList.add('active');
+        event.target.classList.add('active');
+    }
+
+    function refreshDashboard() {
+        alert('Dashboard refreshed! (In production, this would fetch real-time data from API)');
+        console.log('Refreshing dashboard...');
+    }
+
+    function initializeCharts() {
+        // ROI Chart
+        const roiCtx = document.getElementById('roiChart')?.getContext('2d');
+        if (roiCtx) {
+            new Chart(roiCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6'],
+                    datasets: [{
+                        label: 'Average ROI (%)',
+                        data: [15, 22, 28, 35, 40, 42.5],
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true, labels: { font: { size: 12 } } }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 100 }
+                    }
+                }
+            });
+        }
+
+        // Financial Chart
+        const finCtx = document.getElementById('financialChart')?.getContext('2d');
+        if (finCtx) {
+            new Chart(finCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Revenue', 'Costs', 'Net Income'],
+                    datasets: [{
+                        label: 'Amount (€)',
+                        data: [250000, 100000, 150000],
+                        backgroundColor: ['#10b981', '#f59e0b', '#2563eb']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'x'
+                }
+            });
+        }
+
+        // Green Chart
+        const greenCtx = document.getElementById('greenChart')?.getContext('2d');
+        if (greenCtx) {
+            new Chart(greenCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['ESG Compliant', 'In Progress', 'Below Target'],
+                    datasets: [{
+                        data: [60, 30, 10],
+                        backgroundColor: ['#10b981', '#f59e0b', '#ef4444']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+    }
+
+    // Update dashboard values
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('total-projects').textContent = dashboardData.projects;
+        document.getElementById('on-track-kpis').textContent = dashboardData.kpisOnTrack;
+        document.getElementById('alert-count').textContent = dashboardData.alerts;
+        document.getElementById('avg-roi').textContent = dashboardData.averageROI.toFixed(1) + '%';
+        document.getElementById('total-co2').textContent = dashboardData.totalCO2.toLocaleString();
+        document.getElementById('total-jobs').textContent = dashboardData.totalJobs;
+
+        initializeCharts();
+    });
+</script>
+
+</body>
+</html>

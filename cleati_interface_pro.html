@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLEATI - Plateforme Intelligente d'Analyse Financière</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #667eea;
+            --accent: #764ba2;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --lighter: #f8f9fa;
+            --dark: #1a1a1a;
+            --border: #e0e6ed;
+            --text: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: var(--lighter);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* ========== SPLASHSCREEN ========== */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeOut 3s ease-in-out forwards;
+            animation-delay: 0s;
+        }
+
+        .splash-logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+
+        .splash-text {
+            font-size: 36px;
+            font-weight: 300;
+            color: white;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .splash-subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes fadeOut {
+            0%, 90% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== LAYOUT PRINCIPAL ========== */
+        .container {
+            display: flex;
+            height: 100vh;
+            background: var(--lighter);
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--light);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--danger);
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.connected {
+            background: var(--success);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 80px;
+            width: 280px;
+            height: calc(100vh - 80px);
+            background: white;
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            padding: 30px 20px;
+            z-index: 50;
+        }
+
+        .sidebar-section {
+            margin-bottom: 35px;
+        }
+
+        .sidebar-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+
+        .sidebar-item {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+            background: transparent;
+        }
+
+        .sidebar-item:hover {
+            background: var(--light);
+            color: var(--secondary);
+        }
+
+        .sidebar-item.active {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+        }
+
+        .sidebar-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .stats-box {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 12px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main {
+            margin-left: 280px;
+            margin-top: 80px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--lighter);
+        }
+
+        .upload-zone {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .upload-card {
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            max-width: 500px;
+            width: 100%;
+            border: 2px dashed var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-card:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .upload-icon {
+            font-size: 60px;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .upload-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .upload-subtitle {
+            font-size: 14px;
+            color: #95a5a6;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .upload-button {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .upload-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .upload-button:active {
+            transform: translateY(0);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* ========== CHAT ZONE ========== */
+        .chat-zone {
+            background: white;
+            border-top: 1px solid var(--border);
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+        }
+
+        .chat-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .chat-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-icon {
+            font-size: 16px;
+            color: var(--secondary);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            animation: slideInUp 0.3s ease;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 60%;
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .message.bot .message-content {
+            background: var(--light);
+            color: var(--text);
+            border-left: 3px solid var(--secondary);
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            border-radius: 12px 2px 12px 12px;
+        }
+
+        .chat-input-zone {
+            padding: 15px 30px;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .chat-send {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .chat-send:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .chat-send:active {
+            transform: scale(0.95);
+        }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+
+            .main {
+                margin-left: 240px;
+            }
+
+            .upload-card {
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- SPLASH SCREEN -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-logo">🎯</div>
+        <div class="splash-text">CLEATI</div>
+        <div class="splash-subtitle">Plateforme Intelligente d'Analyse</div>
+    </div>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">📊</div>
+            <span>CLEATI</span>
+        </div>
+        <div class="header-right">
+            <div class="status-indicator">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Serveur</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTAINER -->
+    <div class="container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <!-- STATS -->
+            <div class="stats-box">
+                <div class="stat-item">
+                    <span>Fichiers</span>
+                    <span class="stat-value" id="fileCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Rapports</span>
+                    <span class="stat-value" id="reportCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Temps</span>
+                    <span class="stat-value" id="timeCount">0s</span>
+                </div>
+            </div>
+
+            <!-- FONCTIONNALITÉS -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">📋 Fonctionnalités</div>
+                <div class="sidebar-item active" onclick="scrollToSection('upload')">
+                    <div class="sidebar-icon">📤</div>
+                    <span>Upload Fichier</span>
+                </div>
+                <div class="sidebar-item" onclick="scrollToSection('analyze')">
+                    <div class="sidebar-icon">🔍</div>
+                    <span>Analyse Fichier</span>
+                </div>
+                <div class="sidebar-item" onclick="scrollToSection('questions')">
+                    <div class="sidebar-icon">❓</div>
+                    <span>Questions</span>
+                </div>
+                <div class="sidebar-item" onclick="scrollToSection('format')">
+                    <div class="sidebar-icon">📄</div>
+                    <span>Choix Format</span>
+                </div>
+                <div class="sidebar-item" onclick="scrollToSection('generate')">
+                    <div class="sidebar-icon">⚡</div>
+                    <span>Générer</span>
+                </div>
+            </div>
+
+            <!-- STATUT -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">📊 Statut</div>
+                <div class="sidebar-item">
+                    <div class="sidebar-icon">✓</div>
+                    <span>Conversation Active</span>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-icon">✓</div>
+                    <span>API Connectée</span>
+                </div>
+                <div class="sidebar-item">
+                    <div class="sidebar-icon">✓</div>
+                    <span>Rapports Prêts</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main">
+            <!-- UPLOAD ZONE -->
+            <div class="upload-zone" id="uploadSection">
+                <div class="upload-card" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-title">Chargez votre fichier</div>
+                    <div class="upload-subtitle">
+                        Déposez votre fichier Excel ou cliquez pour explorer<br>
+                        <strong style="color: var(--secondary);">Parlez, je vous écoute</strong>
+                    </div>
+                    <button class="upload-button" type="button">
+                        <i class="fas fa-upload"></i> Sélectionner un fichier
+                    </button>
+                    <input type="file" id="fileInput" class="file-input" accept=".xlsx,.xls,.csv">
+                    <div style="font-size: 11px; color: #95a5a6; margin-top: 15px; opacity: 0.7;">
+                        Formats acceptés: Excel (.xlsx, .xls), CSV
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHAT ZONE -->
+            <div class="chat-zone">
+                <div class="chat-header">
+                    <div class="chat-title">
+                        <div class="chat-icon">💬</div>
+                        Dialogue Intelligent
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot">
+                        <div class="message-content">
+                            👋 Bonjour! Je suis CLEATI. Parlez, je vous écoute. Chargez votre fichier pour commencer.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-zone">
+                    <input
+                        type="text"
+                        class="chat-input"
+                        id="chatInput"
+                        placeholder="Parlez, je vous écoute..."
+                        onkeypress="if(event.key==='Enter') sendMessage()"
+                    >
+                    <button class="chat-send" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:8000";
+        let conversationId = null;
+        let statusConnected = false;
+
+        // SPLASH SCREEN
+        setTimeout(() => {
+            document.getElementById('splashScreen').style.display = 'none';
+            checkServerStatus();
+        }, 3000);
+
+        // CHECK SERVER STATUS
+        async function checkServerStatus() {
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                if (response.ok) {
+                    statusConnected = true;
+                    document.getElementById('statusDot').classList.add('connected');
+                    document.getElementById('statusText').textContent = 'Connecté';
+                    initConversation();
+                }
+            } catch (error) {
+                document.getElementById('statusText').textContent = 'Non disponible';
+            }
+        }
+
+        // INIT CONVERSATION
+        async function initConversation() {
+            try {
+                const response = await fetch(`${API_URL}/api/conversation/start`, { method: 'POST' });
+                const data = await response.json();
+                conversationId = data.conversation_id;
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+        }
+
+        // FILE UPLOAD
+        document.getElementById('fileInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file || !conversationId) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch(`${API_URL}/api/conversation/upload/${conversationId}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                addMessage(`Fichier analysé: ${data.file_name} (${data.file_type})`);
+                document.getElementById('fileCount').textContent = '1';
+            } catch (error) {
+                addMessage('Erreur lors de l\'upload');
+            }
+        });
+
+        // SEND MESSAGE
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            input.value = '';
+
+            // Simulated response
+            setTimeout(() => {
+                addMessage('✓ Message reçu et enregistré');
+            }, 500);
+        }
+
+        // ADD MESSAGE
+        function addMessage(text, sender = 'bot') {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${sender}`;
+            messageEl.innerHTML = `<div class="message-content">${text}</div>`;
+            messagesDiv.appendChild(messageEl);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        // SCROLL TO SECTION
+        function scrollToSection(section) {
+            console.log('Section:', section);
+        }
+    </script>
+</body>
+</html>
